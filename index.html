@@ -1,0 +1,723 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeightEase - Embrace Your Height</title>
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-dark: #121212;
+            --accent-color: #009688;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        .light-mode {
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+        .light-mode nav a{
+          color: var(--text-dark);
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .icons button {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: color 0.3s;
+        }
+        .light-mode .icons button{
+          color: var(--text-dark);
+        }
+
+        .icons button:hover {
+            color: var(--accent-color);
+        }
+
+        #cart-count {
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+            margin-left: 0.2rem;
+        }
+
+        #home {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('hero-image.jpg') center/cover no-repeat;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        #home h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        .cta-button:hover {
+            background-color: #00796b;
+            transform: translateY(-2px);
+        }
+
+        #products {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        #products h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .product-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .product-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+        .light-mode .product-item h3{
+          color: var(--text-dark);
+        }
+
+        .product-item p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #cccccc;
+        }
+        .light-mode .product-item p{
+          color: #575757;
+        }
+
+        .add-to-cart {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+        }
+
+        .add-to-cart:hover {
+            background-color: #00796b;
+        }
+
+        #community {
+            padding: 2rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        #community h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .testimonials {
+            display: flex;
+            overflow-x: auto;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        blockquote {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            min-width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            font-style: italic;
+            color: #cccccc;
+            flex-shrink: 0;
+        }
+        .light-mode blockquote{
+          color: #575757;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            text-align: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .contact-info p, .social-media a, .newsletter input, .newsletter button {
+            margin: 0.5rem 0;
+            color: var(--text-light);
+        }
+        .light-mode .contact-info p, .light-mode .social-media a, .light-mode .newsletter input, .light-mode .newsletter button{
+          color: var(--text-dark);
+        }
+
+        .social-media a {
+            text-decoration: none;
+            margin-right: 1rem;
+            display: inline-block;
+        }
+
+        .newsletter input {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            width: 60%;
+        }
+
+        .newsletter button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background-color: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter button:hover {
+            background-color: #00796b;
+        }
+
+        /* Accessibility Enhancements */
+        [aria-label]:hover::after {
+            content: attr(aria-label);
+            position: absolute;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            z-index: 1001;
+            white-space: nowrap;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                margin-top: 1rem;
+            }
+
+            nav a {
+                margin: 0.5rem 0;
+                display: block;
+            }
+
+            .icons {
+                margin-top: 1rem;
+            }
+            #home h1{
+              font-size: 2rem;
+            }
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            width: 60%;
+            background-color: rgba(255,255,255,0.2);
+            color: var(--text-light);
+        }
+        .light-mode .search-bar input[type="text"]{
+          color: var(--text-dark);
+          background-color: rgba(0,0,0,0.1);
+        }
+
+        .search-bar button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background-color: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #00796b;
+        }
+
+        /* Quick View Styles */
+        .quick-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .quick-view.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .quick-view-content {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        .light-mode .quick-view-content{
+          background-color: #ffffff;
+          color: var(--text-dark);
+        }
+
+        .close-quick-view {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .light-mode .close-quick-view{
+          color: var(--text-dark);
+        }
+
+        .close-quick-view:hover {
+            color: var(--accent-color);
+        }
+
+        .quick-view-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .quick-view-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-view-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .filter-sort-options {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          margin-bottom: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .filter-sort-options select,
+        .filter-sort-options button {
+          padding: 0.5rem 1rem;
+          margin: 0.5rem;
+          border-radius: 5px;
+          border: 1px solid var(--accent-color);
+          background-color: rgba(255, 255, 255, 0.1);
+          color: var(--text-light);
+          cursor: pointer;
+          transition: background-color 0.3s, color 0.3s;
+        }
+        .light-mode .filter-sort-options select, .light-mode .filter-sort-options button{
+          color: var(--text-dark);
+          background-color: rgba(0,0,0,0.05);
+        }
+
+        .filter-sort-options select:hover,
+        .filter-sort-options button:hover {
+          background-color: var(--accent-color);
+          color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">HeightEase</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#about">About</a>
+            <a href="#community">Community</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="icons">
+            <button id="theme-switcher" aria-label="Toggle Theme">🌙</button>
+            <button id="cart-button" aria-label="Cart">🛒<span id="cart-count">0</span></button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <h1>Embrace Your Height</h1>
+        <button class="cta-button">Shop Now</button>
+    </section>
+
+    <!-- Product Showcase -->
+    <section id="products">
+        <h2>Our Products</h2>
+          <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search products...">
+            <button id="search-button">Search</button>
+        </div>
+        <div class="filter-sort-options">
+          <select id="category-filter">
+              <option value="">All Categories</option>
+              <option value="heels">High Heels</option>
+              <option value="stools">Stools</option>
+              <option value="shoes">High-Sole Shoes</option>
+          </select>
+          <select id="sort-by">
+              <option value="popularity">Popularity</option>
+              <option value="price-low-high">Price: Low to High</option>
+              <option value="price-high-low">Price: High to Low</option>
+          </select>
+      </div>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-item" data-category="heels">
+                <img src="high-heels.jpg" alt="High Heels" loading="lazy">
+                <h3>Elegant High Heels</h3>
+                <p>Stylish and comfortable high heels designed for all-day wear.</p>
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="quick-view-btn">Quick View</button>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-item" data-category="stools">
+                <img src="step-stool.jpg" alt="Step Stool" loading="lazy">
+                <h3>Adjustable Step Stool</h3>
+                <p>Durable and adjustable step stool for easy reach.</p>
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="quick-view-btn">Quick View</button>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-item" data-category="shoes">
+                <img src="high-sole-shoes.jpg" alt="High-Sole Shoes" loading="lazy">
+                <h3>High-Sole Sneakers</h3>
+                <p>Fashionable high-sole sneakers for added height and comfort.</p>
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="quick-view-btn">Quick View</button>
+            </div>
+             <!-- Product 4 -->
+            <div class="product-item" data-category="heels">
+                <img src="platform-heels.jpg" alt="Platform Heels" loading="lazy">
+                <h3>Platform Heels</h3>
+                <p>Chic platform heels that provide extra height and stability.</p>
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="quick-view-btn">Quick View</button>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-item" data-category="stools">
+                <img src="folding-stool.jpg" alt="Folding Stool" loading="lazy">
+                <h3>Compact Folding Stool</h3>
+                <p>Portable and compact folding stool, perfect for on-the-go use.</p>
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="quick-view-btn">Quick View</button>
+            </div>
+            <!-- Product 6 -->
+            <div class="product-item" data-category="shoes">
+                <img src="elevator-shoes.jpg" alt="Elevator Shoes" loading="lazy">
+                <h3>Discreet Elevator Shoes</h3>
+                <p>Stylish shoes with built-in height-increasing insoles.</p>
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="quick-view-btn">Quick View</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Community/Testimonial Section -->
+    <section id="community">
+        <h2>Our Community</h2>
+        <div class="testimonials">
+            <blockquote>"HeightEase has truly transformed my confidence! The high heels are so comfortable." - Jane D.</blockquote>
+            <blockquote>"I love the adjustable step stool. It's perfect for reaching high shelves." - Sarah L.</blockquote>
+            <blockquote>"The high-sole sneakers are stylish and give me the extra height I wanted." - Emily R.</blockquote>
+            <blockquote>"The platform heels are amazing! They're both stylish and comfortable." - Maria S.</blockquote>
+            <blockquote>"The folding stool is so convenient. I take it everywhere with me!" - John P.</blockquote>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="contact-info">
+            <p>Email: contact@heightease.com</p>
+            <p>Phone: (123) 456-7890</p>
+        </div>
+        <div class="social-media">
+            <a href="#" aria-label="Facebook">Facebook</a>
+            <a href="#" aria-label="Instagram">Instagram</a>
+        </div>
+        <div class="newsletter">
+            <input type="email" placeholder="Subscribe to our newsletter" aria-label="Enter your email">
+            <button>Subscribe</button>
+        </div>
+    </footer>
+      <!-- Quick View Modal -->
+    <div class="quick-view">
+        <div class="quick-view-content">
+            <button class="close-quick-view">X</button>
+            <img src="" alt="Product Image" class="quick-view-image">
+            <h3 class="quick-view-title"></h3>
+            <p class="quick-view-description"></p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+      // Utility Functions
+      function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+      }
+
+      // JavaScript for Theme Switching
+      const themeSwitcher = document.getElementById('theme-switcher');
+      themeSwitcher.addEventListener('click', () => {
+          document.body.classList.toggle('light-mode');
+          themeSwitcher.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+          localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+      });
+
+      // Initialize theme from local storage
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+          document.body.classList.toggle('light-mode', savedTheme === 'light');
+          themeSwitcher.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+      }
+
+      // JavaScript for Cart Functionality
+      const cartButton = document.getElementById('cart-button');
+      const cartCount = document.getElementById('cart-count');
+      let cartItems = parseInt(localStorage.getItem('cartItems')) || 0;
+      cartCount.textContent = cartItems;
+
+      function updateCart(countChange) {
+          cartItems += countChange;
+          cartCount.textContent = cartItems;
+          localStorage.setItem('cartItems', cartItems);
+      }
+
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+          button.addEventListener('click', () => {
+              updateCart(1);
+          });
+      });
+
+      // Quick View Functionality
+      const quickView = document.querySelector('.quick-view');
+      const quickViewImage = quickView.querySelector('.quick-view-image');
+      const quickViewTitle = quickView.querySelector('.quick-view-title');
+      const quickViewDescription = quickView.querySelector('.quick-view-description');
+      const closeQuickViewBtn = quickView.querySelector('.close-quick-view');
+
+      function showQuickView(productItem) {
+          quickViewImage.src = productItem.querySelector('img').src;
+          quickViewTitle.textContent = productItem.querySelector('h3').textContent;
+          quickViewDescription.textContent = productItem.querySelector('p').textContent;
+          quickView.classList.add('active');
+      }
+
+      document.querySelectorAll('.quick-view-btn').forEach(button => {
+          button.addEventListener('click', (event) => {
+              event.stopPropagation();
+              const productItem = event.target.closest('.product-item');
+              showQuickView(productItem);
+          });
+      });
+
+      closeQuickViewBtn.addEventListener('click', () => {
+          quickView.classList.remove('active');
+      });
+
+      // Prevent clicks within quick-view-content from closing the modal
+      document.querySelector('.quick-view-content').addEventListener('click', (event) => {
+          event.stopPropagation();
+      });
+
+      // Close quick view when clicking outside the content
+      quickView.addEventListener('click', () => {
+          quickView.classList.remove('active');
+      });
+
+      // Search, Filter, and Sort Functionality
+      const searchInput = document.getElementById('search-input');
+      const categoryFilter = document.getElementById('category-filter');
+      const sortBy = document.getElementById('sort-by');
+      const productGrid = document.querySelector('.product-grid');
+
+      function filterProducts() {
+          const searchTerm = searchInput.value.toLowerCase();
+          const selectedCategory = categoryFilter.value;
+          const sortValue = sortBy.value;
+
+          let products = Array.from(productGrid.querySelectorAll('.product-item'));
+
+          // Filter by search term and category
+          products = products.filter(product => {
+              const name = product.querySelector('h3').textContent.toLowerCase();
+              const description = product.querySelector('p').textContent.toLowerCase();
+              const category = product.dataset.category;
+
+              const matchesSearch = name.includes(searchTerm) || description.includes(searchTerm);
+              const matchesCategory = selectedCategory === '' || category === selectedCategory;
+
+              return matchesSearch && matchesCategory;
+          });
+
+          // Sort products
+          if (sortValue === 'price-low-high') {
+              products.sort((a, b) => {
+                  // Dummy price data for demonstration
+                  const priceA = a.querySelector('h3').textContent.length * 10;
+                  const priceB = b.querySelector('h3').textContent.length * 10;
+                  return priceA - priceB;
+              });
+          } else if (sortValue === 'price-high-low') {
+              products.sort((a, b) => {
+                  const priceA = a.querySelector('h3').textContent.length * 10;
+                  const priceB = b.querySelector('h3').textContent.length * 10;
+                  return priceB - priceA;
+              });
+          }
+
+          // Clear and re-append products
+          productGrid.innerHTML = '';
+          products.forEach(product => productGrid.appendChild(product));
+      }
+
+      searchInput.addEventListener('input', debounce(filterProducts, 300));
+      categoryFilter.addEventListener('change', filterProducts);
+      sortBy.addEventListener('change', filterProducts);
+    </script>
+</body>
+</html>
